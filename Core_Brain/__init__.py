@@ -1,8 +1,8 @@
 import logging
-from .speech_to_text import SpeechToText
-from .text_to_speech import TextToSpeech
-from .memory_manager import MemoryManager
-from .nlp_engine.nlp_engine import NLPEngine
+from .speech_to_text import SpeechToText as stt
+from .text_to_speech import TextToSpeech as tts
+from .memory_manager import MemoryManager as memory
+from .nlp_engine.nlp_engine import NLPEngine as nlp
 
 # Configure logging for the core brain
 logging.basicConfig(level=logging.INFO)
