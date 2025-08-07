@@ -15,7 +15,8 @@ def initialize_components():
     """Initialize all components with proper error handling"""
     try:
         # Try to import Core_Brain components
-        from Core_Brain import stt, tts, nlp, memory, get_core_status, is_core_ready
+        from Core_Brain import stt, tts, memory, get_core_status, is_core_ready
+        from Core_Brain.nlp_engine.nlp_engine import nlp
         
         # Verify components are initialized
         if not is_core_ready():
