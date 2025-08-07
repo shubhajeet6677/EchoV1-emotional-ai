@@ -1,4 +1,4 @@
-
+import sounddevice as sd
 import whisper
 from pydub import AudioSegment
 import tempfile 
