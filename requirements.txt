@@ -21,6 +21,7 @@ SpeechRecognition==3.10.0
 pydub==0.25.1
 soundfile==0.12.1
 librosa==0.10.1
+sounddevice==0.4.6
 
 # Text-to-Speech
 gTTS==2.4.0
