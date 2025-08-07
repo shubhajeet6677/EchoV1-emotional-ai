@@ -24,10 +24,11 @@ components = {}
 try:
     # Import from echo_backend.integration
     from echo_backend.integration import (
-        stt, tts, nlp, memory, pipeline, 
+        stt, tts, memory, pipeline, 
         get_core_status, is_core_ready
     )
-    
+    from Core_Brain.nlp_engine import NLPEngine
+    nlp = NLPEngine()
     components = {
         'stt': stt,
         'tts': tts,
