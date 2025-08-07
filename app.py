@@ -85,10 +85,11 @@ st.markdown("""
             color: #666;
         }
         .stMetric {
-            background-color: #ffffff;
+            background-color: #2e2e2e;
             border-radius: 10px;
             padding: 15px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            color: #ffffff;
         }
         .section-box {
             background-color: #fff;
