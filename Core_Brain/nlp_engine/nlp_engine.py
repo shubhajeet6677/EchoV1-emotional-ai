@@ -9,6 +9,8 @@ import requests
 import logging
 from dotenv import load_dotenv
 
+st.set_page_config(page_title="ECHO V1", page_icon="🤖", layout="centered")
+
 load_dotenv()
 GROQ_API_KEY = os.getenv("GROQ_API_KEY")
 
