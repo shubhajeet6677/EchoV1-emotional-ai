@@ -1,4 +1,5 @@
 import streamlit as st
+st.set_page_config(page_title="ECHO V1", page_icon="🤖", layout="centered")
 import requests
 from datetime import datetime
 import time
@@ -66,7 +67,6 @@ pipeline = components['pipeline']
 get_core_status = components['get_core_status']
 is_core_ready = components['is_core_ready']
 
-st.set_page_config(page_title="ECHO V1", page_icon="🤖", layout="centered")
 
 st.markdown("""
     <style>
