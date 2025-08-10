@@ -345,3 +345,6 @@ if BACKEND_AVAILABLE and nlp:
         st.markdown(f"🤖 **Echo Status:** Online | **Model:** {model_name}")
     except:
         st.markdown("🤖 **Echo Status:** Online")
+
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8501))
