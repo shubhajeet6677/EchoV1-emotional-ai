@@ -109,25 +109,24 @@ Echo V1: "That's absolutely wonderful news! 🎉 I can feel your excitement, and
 
 ### Project Structure
 
-```
 EchoV1-emotional-ai/
-├── app.py                 # Main Streamlit application
-├── requirements.txt       # Python dependencies
-├── .env.example          # Environment variables template
-├── src/
-│   ├── emotion_detector.py   # Emotion detection logic
-│   ├── speech_handler.py     # Voice input/output handling
-│   ├── llama_client.py       # Groq LLaMA-3 integration
-│   └── utils.py              # Utility functions
-├── assets/
-│   ├── audio/               # Audio files
-│   └── images/              # UI assets
-├── tests/
-│   └── test_*.py            # Unit tests
-├── docs/
-│   └── *.md                 # Documentation
+├── app.py                    # Main Streamlit application
+├── requirements.txt          # Python dependencies
+├── .env.example             # Environment variables template
+├── echoV1/
+│   ├── Core_Brain/
+│   │   ├── __init__.py      # Core brain initialization
+│   │   ├── STT.py           # Speech-to-Text processing
+│   │   ├── TTS.py           # Text-to-Speech synthesis
+│   │   ├── memory_manager.py # Conversation memory management
+│   │   └── NLP_engine/
+│   │       ├── __init__.py  # NLP engine initialization
+│   │       └── nlp_engine.py # Natural language processing logic
+│   └── backend/
+│       ├── __init__.py      # Backend initialization
+│       ├── integration.py   # API integrations and orchestration
+│       └── [other files]    # Additional backend components
 └── README.md
-```
 
 ### Running Tests
 
