@@ -1,4 +1,5 @@
 import streamlit as st
+import os
 st.set_page_config(page_title="ECHO V1", page_icon="🤖", layout="centered")
 port = int(os.environ.get("PORT", 8501))  # Render assigns PORT
 st.set_page_config(page_title="Echo V1", layout="wide")
@@ -10,7 +11,6 @@ import requests
 from datetime import datetime
 import time
 from streamlit_lottie import st_lottie
-import os
 import sys
 import logging
 
