@@ -1,5 +1,11 @@
 import streamlit as st
 st.set_page_config(page_title="ECHO V1", page_icon="🤖", layout="centered")
+port = int(os.environ.get("PORT", 8501))  # Render assigns PORT
+st.set_page_config(page_title="Echo V1", layout="wide")
+
+if __name__ == "__main__":
+    os.system(f"streamlit run app.py --server.port {port} --server.address 0.0.0.0")
+    
 import requests
 from datetime import datetime
 import time
