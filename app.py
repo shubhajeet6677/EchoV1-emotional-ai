@@ -1,4 +1,5 @@
 import streamlit as st
+import sys
 import os
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8501))  # Render assigns PORT
@@ -8,7 +9,6 @@ import requests
 from datetime import datetime
 import time
 from streamlit_lottie import st_lottie
-import sys
 import logging
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 sys.path.append(project_root)
@@ -400,3 +400,4 @@ if BACKEND_AVAILABLE and nlp:
     except:
 
         st.markdown("🤖 **Echo Status:** Online")
+
