@@ -1,17 +1,16 @@
 import streamlit as st
-import os
-st.set_page_config(page_title="ECHO V1", page_icon="🤖", layout="centered")
-st.set_page_config(page_title="Echo V1", layout="wide")
-
-if __name__ == "__main__":
-    os.system(f"streamlit run app.py --server.port {port} --server.address 0.0.0.0")
-    
 import requests
 from datetime import datetime
 import time
 from streamlit_lottie import st_lottie
+import os
 import sys
 import logging
+project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+sys.path.append(project_root)
+
+from Core_Brain.nlp_engine.personality_router import PersonalityRouter
+from Core_Brain.memory_manager import MemoryManager
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -30,11 +29,14 @@ components = {}
 try:
     # Import from echo_backend.integration
     from echo_backend.integration import (
-        stt, tts, memory, pipeline, 
+        stt, tts, nlp, memory, pipeline, 
         get_core_status, is_core_ready
     )
+
     from Core_Brain.nlp_engine import NLPEngine
+
     nlp = NLPEngine()
+    
     components = {
         'stt': stt,
         'tts': tts,
@@ -63,6 +65,11 @@ except ImportError as e:
         'is_core_ready': lambda: False
     }
 
+router = PersonalityRouter()
+if "selected_personality" not in st.session_state:
+    st.session_state.selected_personality = "Suzi"  # default
+    router.set_personality("Suzi")
+
 # Extract components
 stt = components['stt']
 tts = components['tts'] 
@@ -72,6 +79,7 @@ pipeline = components['pipeline']
 get_core_status = components['get_core_status']
 is_core_ready = components['is_core_ready']
 
+st.set_page_config(page_title="ECHO V1", page_icon="🤖", layout="centered")
 
 st.markdown("""
     <style>
@@ -95,6 +103,7 @@ st.markdown("""
             padding: 15px;
             box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
             color: #ffffff;
+            font-size: 14px
         }
         .section-box {
             background-color: #fff;
@@ -167,6 +176,26 @@ with st.sidebar:
         help="How long to record audio"
     )
     
+    # personality integration
+    st.subheader("🧑‍🤝‍🧑 Personality Settings")
+    personalities = ["echo", "Suzi", "mentor", "therapist", "legal advisor"]
+    if "selected_personality" not in st.session_state:
+        st.session_state.selected_personality = "echo"
+
+    personality_choice = st.radio(
+        "Choose Personality:",
+        personalities,
+        index=personalities.index(st.session_state.selected_personality)
+    )
+
+    
+    if personality_choice != st.session_state.selected_personality:
+        st.session_state.selected_personality = personality_choice
+        router.set_personality(personality_choice)
+        st.success(f"✅ Personality switched to {personality_choice.title()}")
+
+
+
     # Memory settings
     st.subheader("🧠 Memory Settings")
     if st.button("Clear Conversation History"):
@@ -268,7 +297,9 @@ with col1:
                 st.metric("📊 Sentiment", result['sentiment'].title())
 
             st.subheader("💬 Echo's Response")
-            st.info(result['response_text'])
+            personality_response = router.get_response(result['transcribed_text'], memory)
+            st.info(personality_response)
+            result['response_text'] = personality_response
 
             # Audio response
             if result.get('response_audio_path') and os.path.exists(result['response_audio_path']):
@@ -313,7 +344,21 @@ with col2:
                             'response': 'Analysis component not available.'
                         }
                     else:
-                        result = nlp.analyze(user_input, memory_manager=memory)
+                        analysis={
+                            'intent': 'general',
+                            'emotion': 'neutral',
+                            'sentiment': 'neutral',
+
+                        }
+
+                        personality_response = router.get_response(user_input, memory)
+
+                        result = {
+                            'intent': analysis['intent'],
+                            'emotion': analysis['emotion'],
+                            'sentiment': analysis['sentiment'],
+                            'response': personality_response
+                        }
 
                     # Display results
                     col1_text, col2_text, col3_text = st.columns(3)
@@ -350,6 +395,3 @@ if BACKEND_AVAILABLE and nlp:
         st.markdown(f"🤖 **Echo Status:** Online | **Model:** {model_name}")
     except:
         st.markdown("🤖 **Echo Status:** Online")
-
-if __name__ == "__main__":
-    port = int(os.environ.get("PORT", 8501))
