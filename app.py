@@ -1,9 +1,13 @@
 import streamlit as st
+import os
+if __name__ == "__main__":
+    port = int(os.environ.get("PORT", 8501))  # Render assigns PORT
+    sys.argv = ["streamlit", "run", "app.py", "--server.port", str(port), "--server.address", "0.0.0.0"]
+    sys.exit(stcli.main())
 import requests
 from datetime import datetime
 import time
 from streamlit_lottie import st_lottie
-import os
 import sys
 import logging
 project_root = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -394,4 +398,5 @@ if BACKEND_AVAILABLE and nlp:
         model_name = getattr(nlp, 'model_name', 'Unknown')
         st.markdown(f"🤖 **Echo Status:** Online | **Model:** {model_name}")
     except:
+
         st.markdown("🤖 **Echo Status:** Online")
