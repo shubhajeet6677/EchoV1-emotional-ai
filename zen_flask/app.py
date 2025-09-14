@@ -42,5 +42,17 @@ def chat():
 
     return jsonify({'response': ai_response})
 
+@app.route('/speech-to-text', methods=['POST'])
+def speech_to_text():
+    if 'audio' not in request.files:
+        return jsonify({'error': 'No audio file provided'}), 400
+    audio_file = request.files['audio']
+    audio_bytes = audio_file.read()
+    # Import and use SpeechToText
+    from Core_Brain.speech_to_text import SpeechToText
+    stt = SpeechToText()
+    transcript = stt.process_audio_bytes(audio_bytes)
+    return jsonify({'transcript': transcript})
+
 if __name__ == '__main__':
     app.run(debug=True)
