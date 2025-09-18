@@ -6,8 +6,24 @@ from ai_integration.personality_router import PersonalityRouter
 app = Flask(__name__)
 
 @app.route('/')
-def index():
-    return render_template('index.html')
+def landing():
+    return render_template('landing.html')
+
+@app.route('/features')
+def features():
+    return render_template('features.html')
+
+@app.route('/chat')
+def chat_page():
+    return render_template('chat.html')
+
+@app.route('/login')
+def login():
+    return render_template('login.html')
+
+@app.route('/signup')
+def signup():
+    return render_template('signup.html')
 
 @app.route('/get_ai_response', methods=['POST'])
 def get_ai_response():
